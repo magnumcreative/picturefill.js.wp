@@ -19,16 +19,11 @@ if(!class_exists('Model_Picturefill_WP')){
 
     static function syntax_present($DOMDocument, $html){
       $DOMDocument->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' . $html);
-      $spans = $DOMDocument->getElementsByTagName('span');
+      $spans = $DOMDocument->getElementsByTagName('picture');
       if(0 === $spans->length){
         return false;
       }
-      foreach($spans as $span){
-        if($span->hasAttribute('data-picture')){
-          return true;
-        }
-      }
-      return false;
+      return true;
     }
 
     static function get_images($DOMDocument, $html){
@@ -259,7 +254,7 @@ if(!class_exists('Model_Picturefill_WP')){
           }
         }
 
-        $this->image_sizes = apply_filters('picturefill_wp_image_sizes', $image_sizes, $image_attributes);
+        $this->image_sizes = apply_filters('picturefill_wp_image_sizes', array_reverse($image_sizes), $image_attributes);
       }
     }
 
